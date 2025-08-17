@@ -6,16 +6,22 @@ export async function POST(req: NextRequest) {
   try {
     const { question } = await req.json();
     console.log("Received question:", question);
+
     const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
+    console.log("Provider:", provider);
+
     const wallet = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
+    console.log("Wallet:", wallet);
+
     const broker = await createZGComputeNetworkBroker(wallet);
-    const deposit = Number(ethers.formatEther(ethers.parseEther("0.000001")));
-    const services = await broker.inference.listService();
+    console.log("Broker:", broker);
 
-    console.log("Deposit value:", ethers.parseEther("0.000001").toString());
-
+    const deposit = Number(ethers.formatEther(ethers.parseEther("0.0000005")));
     console.log("Deposit value:", deposit);
+
+    const services = await broker.inference.listService();
     console.log("Available services:", services);
+
     await broker.inference.acknowledgeProviderSigner(process.env.PROVIDER_API!);
 
     const { endpoint, model } = await broker.inference.getServiceMetadata(
