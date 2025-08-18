@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
     });
 
     const text = await response.text();
-    console.log("Chat completion response:", JSON.parse(text));
+    // console.log("Chat completion response:", JSON.parse(text));
     const account = await broker.ledger.getLedger();
     console.log(`Balance: ${ethers.formatEther(account.availableBalance)}`);
     return NextResponse.json(JSON.parse(text), { status: 200 });
