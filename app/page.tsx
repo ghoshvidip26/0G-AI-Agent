@@ -1,8 +1,8 @@
 "use client";
-import { div } from "framer-motion/client";
 import { ChatBot } from "./components/ChatBot";
 import Navbar from "./components/Navbar";
 import { useWallet } from "./context/context";
+import Landing from "./components/Landing";
 
 export default function Home() {
   const { accountData } = useWallet();
@@ -12,13 +12,7 @@ export default function Home() {
       <Navbar />
       <main className="max-w-7xl mx-auto px-4">
         <div>
-          {accountData.address ? (
-            <>
-              <ChatBot />
-            </>
-          ) : (
-            <p>Please connect your wallet.</p>
-          )}
+          {accountData.address ? <ChatBot /> : <Landing onStart={() => {}} />}
         </div>
       </main>
     </div>
