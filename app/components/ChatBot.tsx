@@ -4,9 +4,12 @@ import { useState } from "react";
 import UserMessage from "./UserMessage";
 import BotMessage from "./BotMessage";
 import TypingIndicator from "./TypingIndicator";
+import Microphone from "./Microphone";
+import { handleResponse } from "../utils/utils";
+import { useChatMessageContext } from "@/app/context/ChatContext";
 
 export const ChatBot = () => {
-  const [messages, setMessages] = useState<any>([]);
+  const [messages, setMessages] = useChatMessageContext();
   const [newMessage, setNewMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
@@ -19,20 +22,8 @@ export const ChatBot = () => {
     setIsTyping(true);
 
     try {
-      const res = await fetch("/api/compute", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: newMessage }),
-      });
-
-      if (!res.ok) throw new Error("Failed to fetch AI response");
-      const data = await res.json();
-      console.log("AI response:", data.choices[0].message.content);
-
-      const botMsg = {
-        from: "bot",
-        text: data.choices[0].message.content || "No answer generated",
-      };
+      const response = await handleResponse(newMessage);
+      const botMsg = { from: "bot", text: response };
 
       setMessages((prev: any) => [...prev, botMsg]);
     } catch (err: any) {
@@ -103,6 +94,9 @@ export const ChatBot = () => {
             >
               Send
             </button>
+            <div className="flex items-center justify-center w-10 h-10 border border-black rounded-full bg-white text-black ml-1">
+              <Microphone />
+            </div>
           </form>
         </div>
       </div>

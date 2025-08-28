@@ -1,5 +1,5 @@
 "use client";
-import { useWallet } from "../context/context";
+import { useWallet } from "../context/WalletContext";
 
 const Navbar = () => {
   const { connectWallet, accountData } = useWallet();
@@ -12,21 +12,10 @@ const Navbar = () => {
     <nav className="w-full bg-gray-900 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold text-indigo-400">
-            AI Travel Planner
-          </h1>
-          <a
-            href="#chat"
-            className="hidden sm:inline-block px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition"
-          >
-            Chat
-          </a>
-          <a
-            href="#features"
-            className="hidden sm:inline-block px-3 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition"
-          >
-            Features
-          </a>
+          <img src="/globe.svg" alt="Logo" className="w-9 h-9 rounded-full" />
+          <span className="text-2xl font-bold text-indigo-400 tracking-tight">
+            TripSage
+          </span>
         </div>
 
         <div className="flex items-center space-x-4">

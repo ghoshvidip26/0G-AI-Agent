@@ -1,7 +1,7 @@
 "use client";
 import { ChatBot } from "./components/ChatBot";
 import Navbar from "./components/Navbar";
-import { useWallet } from "./context/context";
+import { useWallet } from "./context/WalletContext";
 import Landing from "./components/Landing";
 
 export default function Home() {
