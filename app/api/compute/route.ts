@@ -16,7 +16,10 @@ export async function POST(req: NextRequest) {
     const broker = await createZGComputeNetworkBroker(wallet);
     console.log("Broker:", broker);
 
-    const deposit = Number(ethers.formatEther(ethers.parseEther("0.0000001")));
+    const ledgerInfo = await broker.ledger.getLedger();
+    console.log("Ledger info:", ledgerInfo);
+
+    const deposit = Number(ethers.formatEther(ethers.parseEther("0.001")));
     console.log("Deposit value:", deposit);
 
     const services = await broker.inference.listService();
