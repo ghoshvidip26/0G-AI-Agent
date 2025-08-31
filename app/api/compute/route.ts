@@ -19,9 +19,11 @@ export async function POST(req: NextRequest) {
     const ledgerInfo = await broker.ledger.getLedger();
     console.log("Ledger info:", ledgerInfo);
 
-    const deposit = Number(ethers.formatEther(ethers.parseEther("0.001")));
-    console.log("Deposit value:", deposit);
+    console.log("Available balance: ", ledgerInfo.availableBalance);
 
+    const deposit = Number(ethers.formatEther(ethers.parseEther("0.00001")));
+    console.log("Deposit value:", deposit);
+    await broker.ledger.depositFund(deposit);
     const services = await broker.inference.listService();
     console.log("Available services:", services);
 
@@ -30,6 +32,7 @@ export async function POST(req: NextRequest) {
     const { endpoint, model } = await broker.inference.getServiceMetadata(
       process.env.PROVIDER_API!
     );
+    console.log("Service metadata:", { endpoint, model });
     const headers = await broker.inference.getRequestHeaders(
       process.env.PROVIDER_API!,
       question
@@ -44,9 +47,6 @@ export async function POST(req: NextRequest) {
     });
 
     const text = await response.text();
-    // console.log("Chat completion response:", JSON.parse(text));
-    const account = await broker.ledger.getLedger();
-    console.log(`Balance: ${ethers.formatEther(account.availableBalance)}`);
     return NextResponse.json(JSON.parse(text), { status: 200 });
   } catch (error) {
     console.error("Error initializing broker:", error);

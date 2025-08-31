@@ -23,6 +23,7 @@ export const ChatBot = () => {
 
     try {
       const response = await handleResponse(newMessage);
+      console.log("AI response:", response);
       const botMsg = { from: "bot", text: response };
 
       setMessages((prev: any) => [...prev, botMsg]);
